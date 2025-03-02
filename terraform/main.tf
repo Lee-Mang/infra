@@ -17,7 +17,7 @@ resource "digitalocean_firewall" "example" {
   # Inbound rule for all IPs (0.0.0.0/0)
   inbound_rule {
     protocol    = "tcp"
-    ports       = ["22", "80", "443"]
+    port_range  = ["22", "80", "443"]
     source_addresses = ["0.0.0.0/0"]
   }
 
@@ -25,7 +25,7 @@ resource "digitalocean_firewall" "example" {
   # Outbound rule to allow traffic to any IP (0.0.0.0/0)
   outbound_rule {
     protocol    = "tcp"
-    ports       = ["80", "443"]
+    port_range  = ["80", "443"]
     destination_addresses = ["0.0.0.0/0"]
   }
 
