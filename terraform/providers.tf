@@ -16,7 +16,7 @@ terraform {
   }
 }
 # Configure the DigitalOcean Provider
-variable "do_token" {}
+
 variable "pvt_key" {}
 data "digitalocean_ssh_key" "terraform" {
   name = "terraform"
