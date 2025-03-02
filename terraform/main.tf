@@ -13,31 +13,19 @@ resource "digitalocean_droplet" "example" {
 resource "digitalocean_firewall" "example" {
   name = "example-firewall"
 
-  # Inbound rule for SSH (port 22) from all IPs (0.0.0.0/0)
+
+  # Inbound rule for all IPs (0.0.0.0/0)
   inbound_rule {
     protocol    = "tcp"
-    port        = "22"
+    ports       = ["22", "80", "443"]
     source_addresses = ["0.0.0.0/0"]
   }
 
-  # Inbound rule for HTTP (port 80) from all IPs (0.0.0.0/0)
-  inbound_rule {
-    protocol    = "tcp"
-    port        = "80"
-    source_addresses = ["0.0.0.0/0"]
-  }
-
-  # Inbound rule for HTTP (port 443) from all IPs (0.0.0.0/0)
-  inbound_rule {
-    protocol    = "tcp"
-    port        = "443"
-    source_addresses = ["0.0.0.0/0"]
-  }
 
   # Outbound rule to allow traffic to any IP (0.0.0.0/0)
   outbound_rule {
     protocol    = "tcp"
-    port        = "80"
+    ports       = ["80", "443"]
     destination_addresses = ["0.0.0.0/0"]
   }
 
