@@ -16,28 +16,28 @@ resource "digitalocean_firewall" "example" {
   # Inbound rule for SSH (port 22) from all IPs (0.0.0.0/0)
   inbound_rule {
     protocol    = "tcp"
-    ports        = ["22"]
+    port        = "22"
     source_addresses = ["0.0.0.0/0"]
   }
 
   # Inbound rule for HTTP (port 80) from all IPs (0.0.0.0/0)
   inbound_rule {
     protocol    = "tcp"
-    ports        = ["80"]
+    port        = "80"
     source_addresses = ["0.0.0.0/0"]
   }
 
   # Inbound rule for HTTP (port 443) from all IPs (0.0.0.0/0)
   inbound_rule {
     protocol    = "tcp"
-    ports        = ["443"]
+    port        = "443"
     source_addresses = ["0.0.0.0/0"]
   }
 
   # Outbound rule to allow traffic to any IP (0.0.0.0/0)
   outbound_rule {
     protocol    = "tcp"
-    ports        = ["80"]
+    port        = "80"
     destination_addresses = ["0.0.0.0/0"]
   }
 
