@@ -12,30 +12,29 @@ resource "digitalocean_droplet" "example" {
 
 resource "digitalocean_firewall" "example" {
   name = "example-firewall"
-
-
- ingress {
+  
+  inbound_rule {
     protocol          = "tcp"
     from_port         = 80      # Starting port
     to_port           = 80      # Ending port (same as from_port for single port)
     source_addresses  = ["0.0.0.0/0"]  # Allow from all IP addresses
   }
 
-  ingress {
+  inbound_rule {
     protocol          = "tcp"
     from_port         = 443     # Starting port
     to_port           = 443     # Ending port (same as from_port for single port)
     source_addresses  = ["0.0.0.0/0"]  # Allow from all IP addresses
   }
 
-  egress {
+  outbound_rule {
     protocol             = "tcp"
     from_port            = 80      # Allow egress on port 80
     to_port              = 80
     destination_addresses = ["0.0.0.0/0"]  # Allow outgoing to all IP addresses
   }
 
-  egress {
+  outbound_rule {
     protocol             = "tcp"
     from_port            = 443     # Allow egress on port 443
     to_port              = 443
