@@ -16,29 +16,29 @@ resource "digitalocean_firewall" "example" {
   # Inbound rule for SSH (port 22) from all IPs (0.0.0.0/0)
   inbound_rule {
     protocol    = "tcp"
-    port        = "22"
-    cidr_blocks = ["0.0.0.0/0"]
+    ports        = ["22"]
+    source_addresses = ["0.0.0.0/0"]
   }
 
   # Inbound rule for HTTP (port 80) from all IPs (0.0.0.0/0)
   inbound_rule {
     protocol    = "tcp"
-    port        = "80"
-    cidr_blocks = ["0.0.0.0/0"]
+    ports        = ["80"]
+    source_addresses = ["0.0.0.0/0"]
   }
 
   # Inbound rule for HTTP (port 443) from all IPs (0.0.0.0/0)
   inbound_rule {
     protocol    = "tcp"
-    port        = "443"
-    cidr_blocks = ["0.0.0.0/0"]
+    ports        = ["443"]
+    source_addresses = ["0.0.0.0/0"]
   }
 
   # Outbound rule to allow traffic to any IP (0.0.0.0/0)
   outbound_rule {
     protocol    = "tcp"
-    port        = "80"
-    cidr_blocks = ["0.0.0.0/0"]
+    ports        = ["80"]
+    destination_addresses = ["0.0.0.0/0"]
   }
 
   droplet_ids = [digitalocean_droplet.example.id]  # Reference to your droplet
