@@ -9,45 +9,41 @@ resource "digitalocean_droplet" "example" {
   size   = "s-1vcpu-2gb"
   ssh_keys = ["HNG"]  # Replace with your SSH key ID
 }
+
 resource "digitalocean_firewall" "example" {
-  name    = "example-firewall"
-  droplet_ids = ["example_id"]  # This attaches the firewall to your droplet
+  name = "example-firewall"
+
+  # Inbound rule for SSH (port 22) from all IPs (0.0.0.0/0)
   inbound_rule {
-    protocol   = "tcp"
-    port_range = "22"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  inbound_rule {
-    protocol   = "tcp"
-    port_range = "80"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-    inbound_rule {
     protocol    = "tcp"
-    port_range  = "443"
+    port        = "22"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  # Inbound rule for HTTP (port 80) from all IPs (0.0.0.0/0)
+  inbound_rule {
+    protocol    = "tcp"
+    port        = "80"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Inbound rule for HTTP (port 443) from all IPs (0.0.0.0/0)
+  inbound_rule {
+    protocol    = "tcp"
+    port        = "443"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Outbound rule to allow traffic to any IP (0.0.0.0/0)
   outbound_rule {
-    protocol   = "tcp"
-    port_range = "80"
+    protocol    = "tcp"
+    port        = "80"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  outbound_rule {
-    protocol   = "tcp"
-    port_range = "22"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  outbound_rule {
-    protocol   = "tcp"
-    port_range = "1-65535"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  outbound_rule {
-    protocol    = "udp"
-    port_range  = "1-65535"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+
+  droplet_ids = [digitalocean_droplet.example.id]  # Reference to your droplet
 }
+
 output "droplet_ip" {
   value = digitalocean_droplet.example.ipv4_address
 }
