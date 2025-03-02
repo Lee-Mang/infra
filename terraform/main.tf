@@ -14,19 +14,32 @@ resource "digitalocean_firewall" "example" {
   name = "example-firewall"
 
 
-  # Inbound rule for all IPs (0.0.0.0/0)
-  inbound_rule {
-    protocol    = "tcp"
-    ports  = [22, 80, 443]
-    source_addresses = ["0.0.0.0/0"]
+ ingress {
+    protocol          = "tcp"
+    from_port         = 80      # Starting port
+    to_port           = 80      # Ending port (same as from_port for single port)
+    source_addresses  = ["0.0.0.0/0"]  # Allow from all IP addresses
   }
 
+  ingress {
+    protocol          = "tcp"
+    from_port         = 443     # Starting port
+    to_port           = 443     # Ending port (same as from_port for single port)
+    source_addresses  = ["0.0.0.0/0"]  # Allow from all IP addresses
+  }
 
-  # Outbound rule to allow traffic to any IP (0.0.0.0/0)
-  outbound_rule {
-    protocol    = "tcp"
-    ports  = [80, 443]
-    destination_addresses = ["0.0.0.0/0"]
+  egress {
+    protocol             = "tcp"
+    from_port            = 80      # Allow egress on port 80
+    to_port              = 80
+    destination_addresses = ["0.0.0.0/0"]  # Allow outgoing to all IP addresses
+  }
+
+  egress {
+    protocol             = "tcp"
+    from_port            = 443     # Allow egress on port 443
+    to_port              = 443
+    destination_addresses = ["0.0.0.0/0"]  # Allow outgoing to all IP addresses
   }
 
   droplet_ids = [digitalocean_droplet.example.id]  # Reference to your droplet
